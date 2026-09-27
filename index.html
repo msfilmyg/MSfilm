@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MS필름 | MS FILM</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    :root {
+      --bg-color: #0b0b0d;
+      --card-bg: #16161a;
+      --text-color: #e0e0e0;
+      --accent-color: #e50914;
+      --text-muted: #a0a0a0;
+      --border-color: #2a2a30;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 50px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+      z-index: 1000;
+    }
+    .logo { font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; color: #fff; text-decoration: none; }
+    .logo span { color: var(--accent-color); }
+    nav ul { display: flex; list-style: none; gap: 30px; }
+    nav a { color: #fff; text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s; }
+    nav a:hover { color: var(--accent-color); }
+
+    .hero {
+      position: relative; height: 100vh; width: 100%;
+      overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center;
+    }
+    .hero-video {
+      position: absolute; top: 50%; left: 50%;
+      min-width: 100%; min-height: 100%; width: auto; height: auto;
+      z-index: 1; transform: translate(-50%, -50%); object-fit: cover;
+    }
+    .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 2; }
+    .hero-content { position: relative; z-index: 3; max-width: 800px; padding: 0 20px; }
+    .hero-content h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 15px; }
+    .hero-content p { font-size: 1.2rem; color: var(--text-muted); }
+
+    section { padding: 100px 50px; max-width: 1300px; margin: 0 auto; }
+    .section-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 40px; position: relative; display: inline-block; }
+    .section-title::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 40px; height: 3px; background-color: var(--accent-color); }
+
+    .about-container { display: flex; align-items: center; gap: 50px; background: var(--card-bg); padding: 50px; border-radius: 12px; border: 1px solid var(--border-color); }
+    .about-logo { width: 200px; height: 200px; background: #000; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 900; color: #fff; border: 2px solid var(--border-color); flex-shrink: 0; }
+    .about-text h3 { font-size: 1.8rem; margin-bottom: 20px; color: #fff; }
+    .about-text p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; }
+
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+    .team-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
+    .team-img { width: 100%; height: 320px; object-fit: cover; background-color: #222; }
+    .team-info { padding: 25px; }
+    .team-info h3 { font-size: 1.3rem; color: #fff; }
+    .team-info .role { color: var(--accent-color); font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; }
+    .team-info .tagline { font-style: italic; color: #fff; margin-bottom: 15px; font-size: 0.95rem; }
+    .team-info .bio { color: var(--text-muted); font-size: 0.88rem; white-space: pre-line; }
+
+    .works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+    .work-card { background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
+    .poster-img { width: 100%; height: 420px; object-fit: cover; background-color: #222; }
+    .work-details { padding: 25px; flex-grow: 1; }
+    .work-title { font-size: 1.5rem; color: #fff; margin-bottom: 10px; }
+    .work-meta { display: flex; gap: 12px; font-size: 0.85rem; color: var(--accent-color); font-weight: 600; margin-bottom: 15px; }
+    .work-synopsis { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+
+    .contact-form { background: var(--card-bg); padding: 40px; border-radius: 12px; border: 1px solid var(--border-color); max-width: 800px; margin: 0 auto; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; color: #fff; font-size: 0.95rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px; background: #0f0f12; border: 1px solid var(--border-color); border-radius: 6px; color: #fff; font-size: 0.95rem; }
+    .form-group textarea { height: 150px; resize: vertical; }
+    .submit-btn { width: 100%; padding: 16px; background: var(--accent-color); color: #fff; border: none; border-radius: 6px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+
+    footer { border-top: 1px solid var(--border-color); padding: 40px 50px; text-align: center; background-color: #070708; }
+    .social-icon { color: #fff; font-size: 1.8rem; text-decoration: none; transition: transform 0.3s; display: inline-block; }
+    .social-icon:hover { color: var(--accent-color); transform: scale(1.15); }
+
+    @media (max-width: 768px) {
+      header { padding: 15px 20px; flex-direction: column; gap: 15px; }
+      section { padding: 60px 20px; }
+      .about-container { flex-direction: column; padding: 30px; }
+      .hero-content h1 { font-size: 2.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="#" class="logo">MS <span>FILM</span></a>
+    <nav>
+      <ul>
+        <li><a href="#about">회사 소개</a></li>
+        <li><a href="#team">스텝진</a></li>
+        <li><a href="#production">제작 작품</a></li>
+        <li><a href="#distribution">배급 작품</a></li>
+        <li><a href="#contact">컨택</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 0. 풀스크린 메인 비디오 -->
+  <div class="hero">
+    <video class="hero-video" autoplay loop muted playsinline>
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-set-of-plateaus-seen-from-the-sky-in-a-sunset-26070-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>MS FILM</h1>
+      <p>독창적인 시선과 깊은 울림으로 세상을 기록합니다</p>
+    </div>
+  </div>
+
+  <!-- 1. 회사 소개 -->
+  <section id="about">
+    <h2 class="section-title">회사 소개</h2>
+    <div class="about-container">
+      <div class="about-logo">MS FILM</div>
+      <div class="about-text">
+        <h3>이야기의 힘으로 관객과 깊이 소통합니다</h3>
+        <p>
+          MS필름은 영화 기획, 제작, 배급 전 과정을 아우르는 독립 영화 프로덕션입니다.
+          우리는 삶의 진정성을 담은 서사를 발굴하고, 창의적인 연출을 통해 시네마틱한 가치를 세상에 전달합니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 스텝진 소개 -->
+  <section id="team">
+    <h2 class="section-title">스텝진 소개</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop" alt="강유광 감독" class="team-img">
+        <div class="team-info">
+          <h3>강유광</h3>
+          <div class="role">영화감독 / 프로듀서</div>
+          <div class="tagline">"프레임 너머의 삶을 디테일하게 기록하는 연출가"</div>
+          <div class="bio">
+• 단편영화 &lt;보배&gt; 연출
+• 전주국제영화제 공식 초청 및 상영
+• 현 MS필름 대표 연출
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 제작 작품 -->
+  <section id="production">
+    <h2 class="section-title">제작 작품</h2>
+    <div class="works-grid">
+      <div class="work-card">
+        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&auto=format&fit=crop" alt="보배 포스터" class="poster-img">
+        <div class="work-details">
+          <h3 class="work-title">보배 (BOBAE)</h3>
+          <div class="work-meta">
+            <span>드라마</span> | <span>25분</span> | <span>2026년</span>
+          </div>
+          <p class="work-synopsis">
+            오래된 시골 마을, 평범해 보이는 일상 속에서 마주하는 인물 간의 묵직한 감정과 비밀에 관한 이야기. 전주국제영화제 공식 초청작.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 배급 작품 -->
+  <section id="distribution">
+    <h2 class="section-title">배급 작품</h2>
+    <div class="works-grid">
+      <div class="work-card">
+        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&auto=format&fit=crop" alt="배급 작품 포스터" class="poster-img">
+        <div class="work-details">
+          <h3 class="work-title">어느 여름날의 기록</h3>
+          <div class="work-meta">
+            <span>다큐멘터리</span> | <span>75분</span> | <span>2025년</span>
+          </div>
+          <p class="work-synopsis">
+            사라져가는 공간과 그 안에서 살아가는 사람들의 목소리를 따뜻한 시선으로 담아낸 극장 및 온라인 배급작.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 컨택 -->
+  <section id="contact">
+    <h2 class="section-title">컨택</h2>
+    <!-- Formspree ID 변경 영역 -->
+    <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+      <div class="form-group">
+        <label for="type">문의 유형</label>
+        <select id="type" name="문의유형" required>
+          <option value="제작 문의">제작 문의 / 시나리오 투고</option>
+          <option value="배급 문의">배급 및 상영 문의</option>
+          <option value="기타 문의">기타 문의</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="name">성함 / 회사명</label>
+        <input type="text" id="name" name="성함" placeholder="홍길동 (또는 회사명)" required>
+      </div>
+      <div class="form-group">
+        <label for="email">이메일 주소</label>
+        <input type="email" id="email" name="이메일" placeholder="example@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="message">문의 내용</label>
+        <textarea id="message" name="문의내용" placeholder="상세 문의 및 투고 내용을 입력해주세요." required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">전송하기</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="social-links" style="margin-bottom: 15px;">
+      <a href="https://www.instagram.com/msfilm_official" target="_blank" rel="noopener noreferrer" class="social-icon" title="인스타그램 바로가기">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+    <p>&copy; 2026 MS FILM. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
