@@ -1,0 +1,54 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "site_content"
+    label: "웹사이트 내용 수정"
+    files:
+      - file: "index.html"
+        label: "메인 페이지"
+        name: "main_page"
+        fields:
+          - { label: "회사 비전 텍스트", name: "about_text", widget: "text" }
+          - { label: "메인 배경 비디오 URL", name: "hero_video_url", widget: "string" }
+
+  - name: "production_works"
+    label: "제작 작품 관리"
+    folder: "_works/production"
+    create: true
+    slug: "{{year}}-{{title}}"
+    fields:
+      - { label: "영화 제목", name: "title", widget: "string" }
+      - { label: "장르", name: "genre", widget: "string" }
+      - { label: "러닝타임", name: "runtime", widget: "string" }
+      - { label: "제작년도", name: "year", widget: "string" }
+      - { label: "포스터 이미지", name: "poster", widget: "image" }
+      - { label: "시놉시스", name: "synopsis", widget: "text" }
+
+  - name: "distribution_works"
+    label: "배급 작품 관리"
+    folder: "_works/distribution"
+    create: true
+    slug: "{{year}}-{{title}}"
+    fields:
+      - { label: "영화 제목", name: "title", widget: "string" }
+      - { label: "장르", name: "genre", widget: "string" }
+      - { label: "러닝타임", name: "runtime", widget: "string" }
+      - { label: "제작/배급년도", name: "year", widget: "string" }
+      - { label: "포스터 이미지", name: "poster", widget: "image" }
+      - { label: "시놉시스", name: "synopsis", widget: "text" }
+
+  - name: "team_members"
+    label: "스텝진 프로필 관리"
+    folder: "_team"
+    create: true
+    fields:
+      - { label: "이름", name: "name", widget: "string" }
+      - { label: "직책", name: "role", widget: "string" }
+      - { label: "한 줄 소개", name: "tagline", widget: "string" }
+      - { label: "약력 / 필모그래피", name: "bio", widget: "text" }
+      - { label: "프로필 사진", name: "photo", widget: "image" }
